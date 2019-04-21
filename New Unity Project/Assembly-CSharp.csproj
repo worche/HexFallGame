@@ -61,24 +61,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\AllAssets\Scripts\AI.cs" />
-    <Compile Include="Assets\AllAssets\Scripts\AStar.cs" />
-    <Compile Include="Assets\AllAssets\Scripts\HexEntry.cs" />
-    <Compile Include="Assets\AllAssets\Scripts\HexGrid.cs" />
-    <Compile Include="Assets\AllAssets\Scripts\HexPosition.cs" />
-    <Compile Include="Assets\AllAssets\Scripts\IPlayerInterface.cs" />
-    <Compile Include="Assets\AllAssets\Scripts\NegativeBinomialDistribution.cs" />
-    <Compile Include="Assets\AllAssets\Scripts\Player.cs" />
-    <Compile Include="Assets\AllAssets\Scripts\ServerGameController.cs" />
-    <Compile Include="Assets\AllAssets\Scripts\SimpleRNG.cs" />
-    <Compile Include="Assets\AllAssets\Scripts\Unit.cs" />
     <Compile Include="Assets\Scripts\Hex.cs" />
     <Compile Include="Assets\Scripts\Map.cs" />
     <Compile Include="Assets\Scripts\MouseManager.cs" />
-    <None Include="Assets\AllAssets\Materials\BlurryHexShader.shader" />
     <None Include="Assets\hexagonAll_sheet.xml" />
-    <None Include="Assets\AllAssets\Materials\CrispHexShader.shader" />
-    <None Include="Assets\AllAssets\readme.txt" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>C:/Users/mehmetcan/Documents/GitHub/HexFallGame/New Unity Project/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
