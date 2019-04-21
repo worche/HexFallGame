@@ -18,18 +18,45 @@ public class Hex : MonoBehaviour
         centerX = transform.position.x;
         centerY = transform.position.y;
 
+        Transform left, right, leftDown=null, leftUp=null, rightDown=null, rightUp =null;
         try
         {
-            Transform left = GameObject.Find("Hex" + (x - 1) + "_" + y).GetComponent<Transform>();
-            Transform right = GameObject.Find("Hex" + (x + 1) + "_" + y).GetComponent<Transform>();
+             left = GameObject.Find("Hex" + (x - 1) + "_" + y).GetComponent<Transform>();
+             right = GameObject.Find("Hex" + (x + 1) + "_" + y).GetComponent<Transform>();
 
-            
+            if (x%2==0 && y%2==0)
+            {
+                rightDown = GameObject.Find("Hex" + (x ) + "_" + (y - 1)).GetComponent<Transform>();
+                leftDown = GameObject.Find("Hex" + (x-1) + "_" + (y - 1)).GetComponent<Transform>();
 
-            Transform leftDown = GameObject.Find("Hex" + (x - 1) + "_" + (y - 1)).GetComponent<Transform>();
-            Transform rightDown = GameObject.Find("Hex" + (x + 1) + "_" + (y - 1)).GetComponent<Transform>();
+                rightUp = GameObject.Find("Hex" + (x ) + "_" + (y + 1)).GetComponent<Transform>();
+                leftUp = GameObject.Find("Hex" + (x-1) + "_" + (y + 1)).GetComponent<Transform>();
 
-            Transform rightUp = GameObject.Find("Hex" + (x + 1) + "_" + (y + 1)).GetComponent<Transform>();
-            Transform leftUp = GameObject.Find("Hex" + (x - 1) + "_" + (y + 1)).GetComponent<Transform>();
+            }else if( x % 2 == 1 && y%2==1)
+            {
+                rightDown = GameObject.Find("Hex" + (x+1) + "_" + (y - 1)).GetComponent<Transform>();
+                leftDown = GameObject.Find("Hex" + (x ) + "_" + (y - 1)).GetComponent<Transform>();
+
+                rightUp = GameObject.Find("Hex" + (x+1) + "_" + (y + 1)).GetComponent<Transform>();
+                leftUp = GameObject.Find("Hex" + (x ) + "_" + (y + 1)).GetComponent<Transform>();
+
+            }
+            else if(x%2==1 && y % 2 == 0)
+            {
+                rightDown = GameObject.Find("Hex" + (x) + "_" + (y - 1)).GetComponent<Transform>();
+                leftDown = GameObject.Find("Hex" + (x-1) + "_" + (y - 1)).GetComponent<Transform>();
+
+                rightUp = GameObject.Find("Hex" + (x ) + "_" + (y + 1)).GetComponent<Transform>();
+                leftUp = GameObject.Find("Hex" + (x-1) + "_" + (y + 1)).GetComponent<Transform>();
+            }
+            else if(x % 2 == 0 && y % 2 == 1)
+            {
+                rightDown = GameObject.Find("Hex" + (x+1) + "_" + (y - 1)).GetComponent<Transform>();
+                leftDown = GameObject.Find("Hex" + (x ) + "_" + (y - 1)).GetComponent<Transform>();
+                rightUp = GameObject.Find("Hex" + (x+1) + "_" + (y + 1)).GetComponent<Transform>();
+                leftUp = GameObject.Find("Hex" + (x) + "_" + (y + 1)).GetComponent<Transform>();
+
+            }
 
 
             corners[0] = CenterOfGravity(left.position, leftUp.position);

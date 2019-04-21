@@ -61,10 +61,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\HexGrid\Assets\Grid.cs" />
+    <Compile Include="Assets\HexGrid\Assets\Tile.cs" />
     <Compile Include="Assets\Scripts\Hex.cs" />
     <Compile Include="Assets\Scripts\Map.cs" />
     <Compile Include="Assets\Scripts\MouseManager.cs" />
     <None Include="Assets\hexagonAll_sheet.xml" />
+    <None Include="Assets\HexGrid\ProjectSettings\ProjectVersion.txt" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>C:/Users/mehmetcan/Documents/GitHub/HexFallGame/New Unity Project/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>

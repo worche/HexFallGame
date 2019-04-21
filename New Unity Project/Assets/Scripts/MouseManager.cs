@@ -31,11 +31,11 @@ public class MouseManager : MonoBehaviour
                     float temp = Vector2.Distance(worldPoint, _hex.corners[i]);
                     if (temp < minDistance)
                     {
-                        Debug.Log(_hex.corners[i]);
                         minDistance = temp;
                         minCorner = _hex.corners[i];
                     }
                 }
+                Debug.Log(_hex.name);
                 selectTool.transform.position = new Vector3(minCorner.x, minCorner.y, 0); ;
 
 

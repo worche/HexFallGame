@@ -130,3 +130,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
+  centerX: 0
+  centerY: 0
+  corners:
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
