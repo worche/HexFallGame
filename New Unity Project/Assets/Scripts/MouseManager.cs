@@ -23,7 +23,7 @@ public class MouseManager : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 selectTool.GetComponent<SelectTool>().Clear();
-
+                
 
                 Hex _hex = hitObject.GetComponent<Hex>();
                 float minDistance=100; //ilk değerin büyük olması lazım
@@ -41,9 +41,10 @@ public class MouseManager : MonoBehaviour
                     }
                 }
                 selectTool.SetActive(true);
-                
                 selectTool.transform.position = new Vector3(minCorner.x, minCorner.y, 0);//seçim aracı o noktaya oturuyor.
-                
+                selectTool.GetComponent<SelectTool>().releaseTriggers = true;
+
+
             }
         }
 
