@@ -9,23 +9,27 @@ public class MouseManager : MonoBehaviour
 
     void FixedUpdate()
     {
-        //imlecin pozisyonunu kameranın pozisyonuna göre konumlandırıyoruz.
-        Vector2 worldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition); 
-
+        //imlecin pozisyonunu kameranın pozisyonuna göre konumla
+        Vector2 worldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        int layerMask = 1 << 8;
         // O konumdan dikey olarak ışın yolluyoruz
-        RaycastHit2D hit = Physics2D.Raycast(worldPoint, Vector2.zero, 0);
-
-        //ışın çarparsa true döner
+        RaycastHit2D hit = Physics2D.Raycast(worldPoint, Vector2.zero, 0, layerMask);
+        
+        //ışın çarparsa true dön
         if (hit)
         {
             GameObject hitObject = hit.transform.gameObject;
-            
+
             if (Input.GetMouseButtonDown(0))
             {
+                selectTool.GetComponent<SelectTool>().Clear();
+
+
                 Hex _hex = hitObject.GetComponent<Hex>();
-                float minDistance=100;
+                float minDistance=100; //ilk değerin büyük olması lazım
                 Vector2 minCorner=Vector2.zero;
-                for (int i = 0; i < 6; i++)
+
+                for (int i = 0; i < 6; i++) //tıklanan alandaki altıgenin en yakın köşesini seçiyor.
                 {
                    
                     float temp = Vector2.Distance(worldPoint, _hex.corners[i]);
@@ -33,13 +37,12 @@ public class MouseManager : MonoBehaviour
                     {
                         minDistance = temp;
                         minCorner = _hex.corners[i];
+                        
                     }
                 }
-                Debug.Log(_hex.name);
-                selectTool.transform.position = new Vector3(minCorner.x, minCorner.y, 0); ;
-
-
-
+                selectTool.SetActive(true);
+                
+                selectTool.transform.position = new Vector3(minCorner.x, minCorner.y, 0);//seçim aracı o noktaya oturuyor.
                 
             }
         }

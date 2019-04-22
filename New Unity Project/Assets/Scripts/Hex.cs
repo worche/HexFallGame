@@ -24,6 +24,8 @@ public class Hex : MonoBehaviour
              left = GameObject.Find("Hex" + (x - 1) + "_" + y).GetComponent<Transform>();
              right = GameObject.Find("Hex" + (x + 1) + "_" + y).GetComponent<Transform>();
 
+
+            //her altıgen etrafındaki altıgenlerin isimlerini tutuyor.
             if (x%2==0 && y%2==0)
             {
                 rightDown = GameObject.Find("Hex" + (x ) + "_" + (y - 1)).GetComponent<Transform>();
@@ -59,6 +61,11 @@ public class Hex : MonoBehaviour
             }
 
 
+            //Altıgen kendi köşelerini etrafındaki diğer altıgenlere göre belirliyor. 
+            //bu şekilde kesin olarak seçim aracı oraya yerleşebiliyor.
+            //etrafındaki diğer iki altıgenin markezi ile kendi merkezi arasında bir üçgen belirleniyor.
+            //o üçgenin aırlık merkezi kesin olarak köşe noktası oluyor.
+
             corners[0] = CenterOfGravity(left.position, leftUp.position);
             corners[1] = CenterOfGravity(left.position, leftDown.position);
             corners[2] = CenterOfGravity(leftUp.position, rightUp.position);
@@ -69,12 +76,14 @@ public class Hex : MonoBehaviour
         }
         catch { }
     }
+    // eşkenar üçgen agırlık merkezi formülü
     private Vector2 CenterOfGravity(Vector2 h1,Vector2 h2)
     {
         float x = (h1.x + h2.x + centerX) / 3f;
         float y= (h1.y + h2.y + centerY) / 3f;
         return new Vector2(x, y);
     }
+    bool isFalling = true;
 
 
 }

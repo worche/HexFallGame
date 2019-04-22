@@ -9,8 +9,8 @@ public class Map : MonoBehaviour
     public GameObject[] hexPrefab;
 
     //mapin altıgenlerden oluşması için manuel bir offset değeri veriyoruz
-    float xOffset = 0.957f;
-    float yOffset = 0.834f;
+    float xOffset = 1.190f;
+    float yOffset = 1.056f;
 
     private void Start()
     {
