@@ -255,7 +255,7 @@ GameObject:
   - component: {fileID: 312359503}
   m_Layer: 8
   m_Name: Map
-  m_TagString: Untagged
+  m_TagString: map
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -272,8 +272,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3f0c4784be6c460585c1b77fb5cf8bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  widht: 8
-  height: 9
   hexPrefab:
   - {fileID: 983490124055585493, guid: 54519f9a1e5965f4dac33a3a424a382c, type: 3}
   - {fileID: 983490124055585493, guid: 30a42642ac9e8a1458f666e2aad8be51, type: 3}

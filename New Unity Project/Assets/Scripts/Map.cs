@@ -4,8 +4,8 @@ using System.Collections;
 public class Map : MonoBehaviour 
 {
     //yükseklik ve genişlik
-    public int widht = 10; 
-    public int height = 10;
+    [SerializeField] static public int widht = 8; 
+    [SerializeField] static public int height = 9;
     public GameObject[] hexPrefab;
 
     //mapin altıgenlerden oluşması için manuel bir offset değeri veriyoruz
@@ -24,11 +24,13 @@ public class Map : MonoBehaviour
                     xPos += xOffset/2f;
                 }
                 //rastgele bir objeyi offset değerlerini kullanarak sahneye çağır
-                GameObject hexGameobject = (GameObject)Instantiate(hexPrefab[Random.Range(0,hexPrefab.Length)], new Vector3(xPos,y*yOffset,0), Quaternion.identity);
+                GameObject hexGameobject = (GameObject)Instantiate(hexPrefab[Random.Range(0,hexPrefab.Length)], new Vector3(xPos,20,0), Quaternion.identity);
 
                 hexGameobject.name = "Hex" + x + "_" + y;
                 hexGameobject.GetComponent<Hex>().x = x;
                 hexGameobject.GetComponent<Hex>().y = y;
+                hexGameobject.GetComponent<Hex>()._x = xPos;
+                hexGameobject.GetComponent<Hex>()._y = y * yOffset;
 
                 hexGameobject.transform.SetParent(this.transform);
 

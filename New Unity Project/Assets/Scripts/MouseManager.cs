@@ -33,6 +33,7 @@ public class MouseManager : MonoBehaviour
                 {
                    
                     float temp = Vector2.Distance(worldPoint, _hex.corners[i]);
+                    Debug.Log(_hex.name +" : "+_hex.corners[i]);
                     if (temp < minDistance)
                     {
                         minDistance = temp;

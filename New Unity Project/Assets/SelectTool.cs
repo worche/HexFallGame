@@ -17,7 +17,7 @@ public class SelectTool : MonoBehaviour
             if (!selectedHexs.Contains(collision.gameObject.GetComponent<Hex>()))
             {
                 selectedHexs.Add(collision.gameObject.GetComponent<Hex>());
-                yazdır(selectedHexs);
+                
             }
 
             if (selectedHexs.Count == 3)
@@ -30,6 +30,12 @@ public class SelectTool : MonoBehaviour
     public void Clear()
     {
         releaseTriggers = false;
+
+        foreach (var hex in selectedHexs)
+        {
+            hex.transform.SetParent(GameObject.FindGameObjectWithTag("map").transform);
+        }
+
         selectedHexs.Clear();
     }
 
@@ -37,6 +43,7 @@ public class SelectTool : MonoBehaviour
     {
         pos = new Vector2(transform.position.x, transform.position.y);
     }
+
     void Rotate()
     {
         Quaternion rot = new Quaternion();
@@ -44,6 +51,7 @@ public class SelectTool : MonoBehaviour
         int i = 0;
         foreach (var hex in selectedHexs)
         {
+            hex.transform.SetParent(this.transform);
             y[i] = hex.y;
             i++;
         }
@@ -57,9 +65,8 @@ public class SelectTool : MonoBehaviour
         {
             rot = Quaternion.Euler(0, 0, 60);
         }
-        transform.rotation = rot;
+        transform.GetChild(0).transform.rotation = rot;
 
-        Clear();
         
     }
 
@@ -89,12 +96,5 @@ public class SelectTool : MonoBehaviour
         else {
             Debug.Log("error");
             return false; }
-    }
-    void yazdır(List<Hex> a)
-    {
-        foreach (var hex in a)
-        {
-            Debug.Log(hex.name);
-        }
     }
 }

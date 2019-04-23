@@ -5,58 +5,57 @@ using UnityEngine;
 public class Hex : MonoBehaviour
 {
 
-    public int x;
+    public int x; // diğer hexlere göre konumu
     public int y;
 
-    public float centerX, centerY;
-    public Vector2[] corners=new Vector2[6];
+    public float _x; //kordinat sistemine göre konumu
+    public float _y;
+
+
+
+    float centerX, centerY; // son kordinatı
+
+
+    public Vector2[] corners = new Vector2[6];
     // Start is called before the first frame update
 
     private void Start()
     {
 
+
+    }
+
+    void SetNeighnours()
+    {
         centerX = transform.position.x;
         centerY = transform.position.y;
 
-        Transform left, right, leftDown=null, leftUp=null, rightDown=null, rightUp =null;
+        Transform left, right, leftDown = null, leftUp = null, rightDown = null, rightUp = null;
+
         try
         {
-             left = GameObject.Find("Hex" + (x - 1) + "_" + y).GetComponent<Transform>();
-             right = GameObject.Find("Hex" + (x + 1) + "_" + y).GetComponent<Transform>();
+            left = FindNeighbours(x - 1, y);
+
+            right = FindNeighbours(x + 1, y);
 
 
             //her altıgen etrafındaki altıgenlerin isimlerini tutuyor.
-            if (x%2==0 && y%2==0)
+            if (y % 2 == 0)
             {
-                rightDown = GameObject.Find("Hex" + (x ) + "_" + (y - 1)).GetComponent<Transform>();
-                leftDown = GameObject.Find("Hex" + (x-1) + "_" + (y - 1)).GetComponent<Transform>();
+                rightDown = FindNeighbours(x , y-1);
+                leftDown = FindNeighbours(x - 1, y-1);
 
-                rightUp = GameObject.Find("Hex" + (x ) + "_" + (y + 1)).GetComponent<Transform>();
-                leftUp = GameObject.Find("Hex" + (x-1) + "_" + (y + 1)).GetComponent<Transform>();
-
-            }else if( x % 2 == 1 && y%2==1)
-            {
-                rightDown = GameObject.Find("Hex" + (x+1) + "_" + (y - 1)).GetComponent<Transform>();
-                leftDown = GameObject.Find("Hex" + (x ) + "_" + (y - 1)).GetComponent<Transform>();
-
-                rightUp = GameObject.Find("Hex" + (x+1) + "_" + (y + 1)).GetComponent<Transform>();
-                leftUp = GameObject.Find("Hex" + (x ) + "_" + (y + 1)).GetComponent<Transform>();
+                rightUp = FindNeighbours(x, y+1);
+                leftUp = FindNeighbours(x - 1, y+1);
 
             }
-            else if(x%2==1 && y % 2 == 0)
+            else if (y % 2 == 1)
             {
-                rightDown = GameObject.Find("Hex" + (x) + "_" + (y - 1)).GetComponent<Transform>();
-                leftDown = GameObject.Find("Hex" + (x-1) + "_" + (y - 1)).GetComponent<Transform>();
+                rightDown = FindNeighbours(x + 1, y-1);
+                leftDown = FindNeighbours(x, y-1);
 
-                rightUp = GameObject.Find("Hex" + (x ) + "_" + (y + 1)).GetComponent<Transform>();
-                leftUp = GameObject.Find("Hex" + (x-1) + "_" + (y + 1)).GetComponent<Transform>();
-            }
-            else if(x % 2 == 0 && y % 2 == 1)
-            {
-                rightDown = GameObject.Find("Hex" + (x+1) + "_" + (y - 1)).GetComponent<Transform>();
-                leftDown = GameObject.Find("Hex" + (x ) + "_" + (y - 1)).GetComponent<Transform>();
-                rightUp = GameObject.Find("Hex" + (x+1) + "_" + (y + 1)).GetComponent<Transform>();
-                leftUp = GameObject.Find("Hex" + (x) + "_" + (y + 1)).GetComponent<Transform>();
+                rightUp = FindNeighbours(x +1, y+1);
+                leftUp = FindNeighbours(x , y+1);
 
             }
 
@@ -74,16 +73,51 @@ public class Hex : MonoBehaviour
             corners[5] = CenterOfGravity(rightDown.position, leftDown.position);
 
         }
-        catch { }
+        catch {
+            Debug.Log("catch");
+        }
+    }
+
+    Transform FindNeighbours(int __x, int __y)
+    {
+        Transform temp;
+        if (__x>=0 && __y>=0 && __x< Map.widht && __y < Map.height)
+            temp = GameObject.Find("Hex" + __x + "_" + __y).GetComponent<Transform>();
+        else
+        {
+            GameObject gameObject = new GameObject();
+            gameObject.transform.position = new Vector3(200, 200, 0);
+            temp = gameObject.transform;
+
+        }
+            
+
+        return temp;
     }
     // eşkenar üçgen agırlık merkezi formülü
-    private Vector2 CenterOfGravity(Vector2 h1,Vector2 h2)
+    private Vector2 CenterOfGravity(Vector2 h1, Vector2 h2)
     {
         float x = (h1.x + h2.x + centerX) / 3f;
-        float y= (h1.y + h2.y + centerY) / 3f;
+        float y = (h1.y + h2.y + centerY) / 3f;
         return new Vector2(x, y);
     }
     bool isFalling = true;
+
+    private void Update()
+    {
+        if (isFalling)
+        {
+            if (transform.position.y - _y < 0.1f)
+            {
+                isFalling = false;
+                transform.position = new Vector3(_x, _y, 0);
+                SetNeighnours();
+            }
+            transform.position = Vector2.Lerp(transform.position, new Vector2(_x, _y), Time.deltaTime * 3f);
+
+        }
+    }
+
 
 
 }
