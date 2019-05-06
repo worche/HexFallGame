@@ -11,51 +11,49 @@ public class Hex : MonoBehaviour
     public float _x; //kordinat sistemine göre konumu
     public float _y;
 
-
+    public int id;
 
     float centerX, centerY; // son kordinatı
 
 
     public Vector2[] corners = new Vector2[6];
     // Start is called before the first frame update
+    Transform left, right, leftDown = null, leftUp = null, rightDown = null, rightUp = null;
 
-    private void Start()
-    {
+    Transform[] cornerHex = new Transform[6]; 
 
 
-    }
-
-    void SetNeighnours()
+     public void SetNeighbours()
     {
         centerX = transform.position.x;
         centerY = transform.position.y;
 
-        Transform left, right, leftDown = null, leftUp = null, rightDown = null, rightUp = null;
+        
 
         try
         {
-            left = FindNeighbours(x - 1, y);
+            cornerHex[0] = FindNeighbours(x - 1, y); //left
 
-            right = FindNeighbours(x + 1, y);
+            cornerHex[3] = FindNeighbours(x + 1, y); // right
 
 
             //her altıgen etrafındaki altıgenlerin isimlerini tutuyor.
             if (y % 2 == 0)
             {
-                rightDown = FindNeighbours(x , y-1);
-                leftDown = FindNeighbours(x - 1, y-1);
+                cornerHex[4] = FindNeighbours(x , y-1); //rightDown
+                cornerHex[5] = FindNeighbours(x - 1, y-1); //leftDown
 
-                rightUp = FindNeighbours(x, y+1);
-                leftUp = FindNeighbours(x - 1, y+1);
+                cornerHex[2] = FindNeighbours(x, y+1); //rightUp
+                cornerHex[1] = FindNeighbours(x - 1, y+1); //leftUp
 
             }
             else if (y % 2 == 1)
             {
-                rightDown = FindNeighbours(x + 1, y-1);
-                leftDown = FindNeighbours(x, y-1);
+                cornerHex[4] = FindNeighbours(x + 1, y-1); //rightDown
+                cornerHex[5] = FindNeighbours(x, y-1); //leftDown
 
-                rightUp = FindNeighbours(x +1, y+1);
-                leftUp = FindNeighbours(x , y+1);
+                cornerHex[2] = FindNeighbours(x +1, y+1); //rightUp
+                cornerHex[1] = FindNeighbours(x , y+1); //leftUp
 
             }
 
@@ -65,16 +63,48 @@ public class Hex : MonoBehaviour
             //etrafındaki diğer iki altıgenin markezi ile kendi merkezi arasında bir üçgen belirleniyor.
             //o üçgenin aırlık merkezi kesin olarak köşe noktası oluyor.
 
-            corners[0] = CenterOfGravity(left.position, leftUp.position);
-            corners[1] = CenterOfGravity(left.position, leftDown.position);
-            corners[2] = CenterOfGravity(leftUp.position, rightUp.position);
-            corners[3] = CenterOfGravity(rightUp.position, right.position);
-            corners[4] = CenterOfGravity(right.position, rightDown.position);
-            corners[5] = CenterOfGravity(rightDown.position, leftDown.position);
+            corners[0] = CenterOfGravity(cornerHex[0].position, cornerHex[1].position);
+            corners[1] = CenterOfGravity(cornerHex[0].position, cornerHex[5].position);
+            corners[2] = CenterOfGravity(cornerHex[1].position, cornerHex[2].position);
+            corners[3] = CenterOfGravity(cornerHex[2].position, cornerHex[3].position);
+            corners[4] = CenterOfGravity(cornerHex[3].position, cornerHex[4].position);
+            corners[5] = CenterOfGravity(cornerHex[4].position, cornerHex[5].position);
 
         }
         catch {
             Debug.Log("catch");
+        }
+    }
+
+    public void CheckNeigboursColor() //altıgenin tüm köşelerinde bulunan altıgenler ile aynı renkte mi
+    {
+        for (int i = 0; i < 6; i++)
+        {
+            try
+            {
+                if (i != 5)
+                {
+                    if (cornerHex[i].gameObject.GetComponent<Hex>().id == this.id && cornerHex[i + 1].gameObject.GetComponent<Hex>().id == this.id)
+                    {
+                        Destroy(cornerHex[i].gameObject);
+                        Destroy(cornerHex[i + 1].gameObject);
+                        Destroy(this.gameObject);
+                        return;
+                    }
+                }
+                else
+                {
+                    if (cornerHex[i].gameObject.GetComponent<Hex>().id == this.id && cornerHex[0].gameObject.GetComponent<Hex>().id == this.id)
+                    {
+                        Destroy(cornerHex[0].gameObject);
+                        Destroy(cornerHex[i].gameObject);
+                        Destroy(this.gameObject);
+
+                        return;
+                    }
+                }
+            }
+            catch { }
         }
     }
 
@@ -85,9 +115,8 @@ public class Hex : MonoBehaviour
             temp = GameObject.Find("Hex" + __x + "_" + __y).GetComponent<Transform>();
         else
         {
-            GameObject gameObject = new GameObject();
-            gameObject.transform.position = new Vector3(200, 200, 0);
-            temp = gameObject.transform;
+
+            temp = GameObject.FindGameObjectWithTag("Maptool").transform;
 
         }
             
@@ -101,7 +130,7 @@ public class Hex : MonoBehaviour
         float y = (h1.y + h2.y + centerY) / 3f;
         return new Vector2(x, y);
     }
-    bool isFalling = true;
+    public bool isFalling = true;
 
     private void Update()
     {
@@ -111,9 +140,9 @@ public class Hex : MonoBehaviour
             {
                 isFalling = false;
                 transform.position = new Vector3(_x, _y, 0);
-                SetNeighnours();
+                SetNeighbours();
             }
-            transform.position = Vector2.Lerp(transform.position, new Vector2(_x, _y), Time.deltaTime * 3f);
+            transform.position = Vector2.Lerp(transform.position, new Vector2(_x, _y), Time.deltaTime * 1.5f);
 
         }
     }

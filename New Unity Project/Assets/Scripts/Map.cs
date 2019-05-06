@@ -12,20 +12,29 @@ public class Map : MonoBehaviour
     float xOffset = 1.190f;
     float yOffset = 1.056f;
 
+    GameObject lastHex;
+
     private void Start()
     {
         for (int x = 0; x < widht; x++)
         {
             for (int y = 0; y < height; y++)
+
             {
+                int random = Random.Range(0, hexPrefab.Length);
                 float xPos = x*xOffset;
                 if (y % 2 == 1)
                 {
                     xPos += xOffset/2f;
                 }
                 //rastgele bir objeyi offset değerlerini kullanarak sahneye çağır
-                GameObject hexGameobject = (GameObject)Instantiate(hexPrefab[Random.Range(0,hexPrefab.Length)], new Vector3(xPos,20,0), Quaternion.identity);
+                
+                GameObject hexGameobject = (GameObject)Instantiate(hexPrefab[random], new Vector3(xPos,25,0), Quaternion.identity);
 
+                if (x == widht - 1 && y == height - 1)
+                    lastHex = hexGameobject;
+
+                hexGameobject.GetComponent<Hex>().id = random;
                 hexGameobject.name = "Hex" + x + "_" + y;
                 hexGameobject.GetComponent<Hex>().x = x;
                 hexGameobject.GetComponent<Hex>().y = y;
@@ -37,6 +46,9 @@ public class Map : MonoBehaviour
             }
 
         }
+        
+
     }
+
 
 }

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Obstacle
   - map
+  - Maptool
   layers:
   - Default
   - TransparentFX
@@ -48,4 +49,7 @@ TagManager:
     locked: 0
   - name: select
     uniqueID: 3622966981
+    locked: 0
+  - name: select1
+    uniqueID: 2060056447
     locked: 0
