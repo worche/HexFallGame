@@ -7,6 +7,7 @@ TagManager:
   - Obstacle
   - map
   - Maptool
+  - hex
   layers:
   - Default
   - TransparentFX
